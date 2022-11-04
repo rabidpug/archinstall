@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eou pipefail
 echo $1 > /etc/hostname
 cat <<EOF > /etc/systemd/network/20-wired.network
 [Match]

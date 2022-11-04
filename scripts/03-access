@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 useradd -m -G wheel -s /bin/bash m
 echo root password
 passwd
@@ -6,7 +7,7 @@ echo m password
 passwd m
 mkdir -p /etc/sudoers.d
 touch /etc/sudoers.d/wheel
-CAT <<EOF > /etc/sudoers.d/wheel
+cat <<EOF > /etc/sudoers.d/wheel
 %wheel ALL=(ALL:ALL) NOPASSWD: ALL
 Defaults env_keep += "EDITOR"
 EOF

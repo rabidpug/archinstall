@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eou pipefail
 cat <<EOF > /etc/xdg/reflector/reflector.conf
 --save /etc/pacman.d/mirrorlist
 --protocol https

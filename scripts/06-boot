@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -eou pipefail
 bootctl install
 cat <<EOF > /boot/loader/loader.conf
 default arch.conf

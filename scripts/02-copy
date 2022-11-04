@@ -1,3 +1,4 @@
 #!/bin/bash
+set -eou pipefail
 cp -r /archinstall/bin/* /usr/local/bin/
 cp -r /archinstall/skel/ /etc/
