@@ -26,4 +26,4 @@ PrintMotd no
 Subsystem sftp /usr/lib/ssh/sftp-server
 EOF
 sudo -u m mkdir /home/m/.ssh
-loginctl enable-linger
+install -b -m644 /dev/null /var/lib/systemd/linger/m
