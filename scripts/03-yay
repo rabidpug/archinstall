@@ -30,6 +30,7 @@ pacman-key --init
 pacman-key --populate archlinux
 sudo pacman -Syu
 git clone https://aur.archlinux.org/yay.git
+chown -R m: yay
 cd yay
 sudo -u m makepkg -si --noconfirm
 cd ../
