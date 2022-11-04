@@ -17,7 +17,7 @@ cat <<EOF >> /etc/security/access.conf
 -:ALL:ALL
 EOF
 
-CAT <<EOF >> /etc/ssh/sshd_config
+cat <<EOF >> /etc/ssh/sshd_config
 PermitRootLogin no
 AuthorizedKeysFile .ssh/authorized_keys
 PasswordAuthentication no
