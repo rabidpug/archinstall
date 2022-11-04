@@ -2,5 +2,4 @@
 set -eou pipefail
 for f in /archinstall/scripts/*; do
   $f "$1" "$2"
-  read 'press enter to continue'
 done
