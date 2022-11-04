@@ -1,10 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 useradd -m -G wheel -s /bin/bash m
-echo root password
-passwd
-echo m password
-passwd m
+echo -e 'atemporarypw\natemporarypw' | passwd --stdin
+echo 'atemporarypw\natemporarypw' | passwd --stdin m
+passwd -e root
+passwd -e m
 mkdir -p /etc/sudoers.d
 touch /etc/sudoers.d/wheel
 cat <<EOF > /etc/sudoers.d/wheel
@@ -27,7 +27,5 @@ AllowUsers m
 PrintMotd no
 Subsystem sftp /usr/lib/ssh/sftp-server
 EOF
-
-systemctl enable sshd
-sudo -u m systemctl --user enable update-keys
+sudo -u m mkdir /home/m/.ssh
 passwd -l root

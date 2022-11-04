@@ -38,6 +38,6 @@ cd ../
 rm -rf yay
 sudo -u m yay -Y --gendb
 sudo -u m yay -Y --devel --combinedupgrade --batchinstall --save
-sudo -u m yay -Syu --devel
-sudo -u m yay -Syu blesh-git neovim-symlinks systemd-boot-pacman-hook
+sudo -u m yay -Syu --noconfirm --devel
+sudo -u m yay -Syu --noconfirm blesh-git neovim-symlinks systemd-boot-pacman-hook
 systemctl enable reflector.timer
