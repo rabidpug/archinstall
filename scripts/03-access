@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 useradd -m -G wheel -s /bin/bash m
-echo -e 'atemporarypw\natemporarypw' | passwd --stdin
-echo 'atemporarypw\natemporarypw' | passwd --stdin m
+echo -e 'atemporarypw\natemporarypw' | passwd
+echo 'atemporarypw\natemporarypw' | passwd m
 passwd -e root
 passwd -e m
 mkdir -p /etc/sudoers.d
