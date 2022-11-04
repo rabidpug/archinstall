@@ -10,5 +10,5 @@ cat <<EOF > /boot/loader/entries/arch.conf
 title rabidArch
 linux /vmlinuz-linux
 initrd /initramfs-linux.img
-options root="arch" rw
+options root="LABEL=arch" rw
 EOF

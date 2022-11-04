@@ -1,6 +1,9 @@
 #!/bin/bash
 useradd -m -G wheel -s /bin/bash m
-passwd -e m
+echo root password
+passwd
+echo m password
+passwd m
 CAT <<EOF > /etc/sudoers.d/wheel
 %wheel ALL=(ALL:ALL) NOPASSWD: ALL
 Defaults env_keep += "EDITOR"
@@ -24,5 +27,4 @@ EOF
 
 systemctl enable sshd
 sudo -u m systemctl --user enable update-keys
-passwd -e root
 passwd -l root
