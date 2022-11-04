@@ -1,0 +1,17 @@
+if is_interactive; then
+  blue=$(tput setaf 4)
+  grey=$(tput setaf 8)
+  violet=$(tput setaf 13)
+  no_colour=$(tput sgr0)
+  [[ ! -z "$SSH_TTY" ]] && usr="\h "
+  PS1="\\[$grey\\]$usr\\[$blue\\]\w\n\\[$violet\\]\q{my/vim-mode} \\[$no_colour\\]"
+  function ble/prompt/backslash:my/vim-mode {
+    case $_ble_decode_keymap in
+      (vi_[on]map) ble/prompt/print '❮' ;;
+      (vi_imap) ble/prompt/print '❯' ;;
+      (vi_smap) ble/prompt/print 's' ;;
+      (vi_xmap) ble/prompt/print '▌' ;;
+    esac
+  }
+  bleopt prompt_ps1_transient=same-dir:trim
+fi

@@ -1,0 +1,7 @@
+#!/bin/bash
+set -eou pipefail
+for f in /installer/scripts/*; do
+  echo -n "step $f..."
+  bash $f "$@" &>>/var/log/archinstall.log
+  echo "done"
+done

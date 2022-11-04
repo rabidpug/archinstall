@@ -1,0 +1,14 @@
+#!/bin/bash
+set -eou pipefail
+read -p 'Hostname: ' host
+read -p 'IP: ' ip
+read -sp 'Password: ' pass
+echo ''
+echo -n 'step 00-preparation...'
+bash /installer/prepare &>/dev/null
+echo 'done'
+arch-chroot /mnt /installer/setup "$host" "$ip" "$pass"
+rm -rf /mnt/installer &>/dev/null
+umount -R /mnt &>/dev/null
+echo 'Complete! Rebooting'
+reboot

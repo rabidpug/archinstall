@@ -1,0 +1,44 @@
+if is_interactive; then
+  . /usr/share/fzf/key-bindings.bash
+  . /usr/share/fzf/completion.bash
+  FZF_TMUX_OPTS='-p'
+  _ble_contrib_fzf_base=/usr
+  ble-import -d contrib/fzf-completion
+  ble-import contrib/fzf-key-bindings
+  ble/function#advice around __fzf_generic_path_completion _fzf_complete.advice
+  ble/function#advice around _fzf_complete                 _fzf_complete.advice
+  ble/function#advice around _fzf_complete_kill            _fzf_complete.advice
+  function _fzf_complete.advice {
+    [[ :$comp_type: == *:auto:* ]] && { compopt -o default; return; }
+    compopt -o noquote
+    COMP_WORDS=("${comp_words[@]}") COMP_CWORD=$comp_cword
+    COMP_LINE=$comp_line COMP_POINT=$comp_point
+    ble/function#push printf '[[ $1 == "\e[5n" ]] || builtin printf "$@"'
+    ble/function#advice/do < /dev/tty &> /dev/tty
+    ble/function#pop printf
+    ble/textarea#invalidate
+  }
+  if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+      . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+      . /etc/bash_completion
+    fi
+  fi
+  _fzf_complete_path_notrigger() {
+    FZF_COMPLETION_TRIGGER='' _fzf_path_completion
+  }
+  _fzf_complete_ssh_notrigger() {
+    FZF_COMPLETION_TRIGGER='' _fzf_host_completion
+  }
+  _fzf_complete_proc_notrigger() {
+    FZF_COMPLETION_TRIGGER='' _fzf_proc_completion
+  }
+  complete -o bashdefault -o default -F _fzf_complete_ssh_notrigger ssh
+  complete -o bashdefault -o default -F _fzf_complete_proc_notrigger kill 
+  complete -o bashdefault -o default -F _fzf_complete_path_notrigger z
+  complete -o bashdefault -o default -F _fzf_complete_path_notrigger ls
+  complete -o bashdefault -o default -F _fzf_complete_path_notrigger vi
+  complete -o bashdefault -o default -F _fzf_complete_path_notrigger df 
+  complete -o bashdefault -o default -F _fzf_complete_path_notrigger cd
+fi

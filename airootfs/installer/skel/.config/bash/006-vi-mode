@@ -1,0 +1,10 @@
+if is_interactive; then
+  bleopt default_keymap=vi
+  function my/vim-load-hook {
+    ble-bind -m vi_imap -f C-c discard-line
+    ble-bind -m vi_nmap -f C-c discard-line
+    bleopt keymap_vi_mode_update_prompt:=1
+    bleopt keymap_vi_mode_show:=
+  }
+  blehook/eval-after-load keymap_vi my/vim-load-hook
+fi

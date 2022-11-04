@@ -1,0 +1,6 @@
+#!/bin/bash
+keys=$(curl -fsSL https://git.cuneo.au/rabidpug.keys | sed 's/ Matt Cuneo (git.cuneo.au)//g')
+if [ ! -z "$keys" ] && echo "$keys" | grep -q '^ssh-rsa'; then
+  echo "$keys" > "./.ssh/authorized_keys";
+fi
+

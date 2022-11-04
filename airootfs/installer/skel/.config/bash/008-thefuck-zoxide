@@ -1,0 +1,5 @@
+if is_interactive; then
+  eval "$(thefuck --alias)"
+  eval "$(zoxide init bash)"
+  source /usr/share/doc/pkgfile/command-not-found.bash
+fi

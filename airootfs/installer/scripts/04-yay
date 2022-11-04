@@ -1,0 +1,44 @@
+#!/bin/bash
+set -eou pipefail
+cat <<EOF > /etc/xdg/reflector/reflector.conf
+--save /etc/pacman.d/mirrorlist
+--protocol https
+--latest 5
+--sort age
+--country Australia
+EOF
+cat <<EOF > /etc/pacman.conf
+[options]
+HoldPkg = pacman glibc
+Architecture = auto
+ParallelDownloads = 5
+NoExtract = /etc/pacman.d/mirrorlist
+Color
+CheckSpace
+SigLevel = Required DatabaseOptional
+LocalFileSigLevel = Optional
+RemoteFileSigLevel = Optional
+[core]
+Include = /etc/pacman.d/mirrorlist
+[extra]
+Include = /etc/pacman.d/mirrorlist
+[community]
+Include = /etc/pacman.d/mirrorlist
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+EOF
+pacman-key --init
+pacman-key --populate archlinux
+sudo pacman -Syu
+git clone https://aur.archlinux.org/yay.git
+chown -R m: yay
+cd yay
+sudo -u m makepkg -si --noconfirm
+cd ../
+rm -rf yay
+sudo -u m yay -Y --gendb
+sudo -u m yay -Y --devel --combinedupgrade --batchinstall --save
+sudo -u m yay -Syu --noconfirm --devel
+sudo -u m yay -Syu --noconfirm blesh-git neovim-symlinks systemd-boot-pacman-hook
+systemctl enable reflector.timer
+systemctl enable pkgfile-update.timer

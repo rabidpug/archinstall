@@ -1,0 +1,29 @@
+#!/bin/bash
+set -euo pipefail
+useradd -m -G wheel -s /bin/bash m
+echo -e "$3\n$3" | passwd
+echo -e "$3\n$3" | passwd m
+mkdir -p /etc/sudoers.d
+touch /etc/sudoers.d/wheel
+cat <<EOF > /etc/sudoers.d/wheel
+%wheel ALL=(ALL:ALL) NOPASSWD: ALL
+Defaults env_keep += "EDITOR"
+EOF
+
+cat <<EOF >> /etc/security/access.conf
++:(wheel):ALL
+-:ALL:ALL
+EOF
+
+cat <<EOF > /etc/ssh/sshd_config
+PermitRootLogin no
+AuthorizedKeysFile .ssh/authorized_keys
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+UsePAM yes
+AllowUsers m
+PrintMotd no
+Subsystem sftp /usr/lib/ssh/sftp-server
+EOF
+sudo -u m mkdir -p /home/m/.ssh
+install -bD -m644 /dev/null /var/lib/systemd/linger/m

@@ -1,0 +1,10 @@
+shopt -s expand_aliases
+if is_interactive; then
+  HISTCONTROL=ignoreboth
+  HISTSIZE=1000
+  HISTFILESIZE=2000
+  shopt -s histappend
+  shopt -s checkwinsize
+  shopt -s autocd
+  shopt -u globstar
+fi

@@ -1,0 +1,4 @@
+#!/bin/bash
+set -eou pipefail
+cp -r /installer/bin/* /usr/local/bin/
+cp -r /installer/skel/ /etc/
