@@ -13,6 +13,7 @@ alias ll='exa -l'
 alias la='exa -A'
 alias l='exa -CF'
 alias _='sudo'
+alias _!='sudo !!'
 alias :q='exit'
 alias lh='exa -a'
 alias l='exa -lbF --git'
@@ -29,6 +30,14 @@ alias as='yay'
 alias al="yay -Qq | fzf --preview 'yay -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias alx="yay -Qqe | fzf --preview 'yay -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias sc="sudo systemctl"
+alias scu="systemctl --user"
+alias scur="systemctl --user restart"
+alias scudr="systemctl --user daemon-reload"
+alias scuen="systemctl --user enable --now"
+alias scus="systemctl --user start"
+alias slu="journalctl --user -u"
+alias slur="journalctl --user -ru"
+alias sluf="journalctl --user -fu"
 alias scr="sudo systemctl restart"
 alias scdr="sudo systemctl daemon-reload"
 alias scen="sudo systemctl enable --now"
@@ -39,11 +48,21 @@ alias slf="sudo journalctl -fu"
 function scf() {
   sudo systemctl --failed --plain --legend=0 | awk '{print $1}'
 }
+function scuf() {
+  systemctl --user --failed --plain --legend=0 | awk '{print $1}'
+}
 function scrf() {
   fl=$(scf)
   if [[ ! -z "$fl" ]]; then
     echo "$fl"
     sudo systemctl restart $fl
+  fi
+}
+function scurf() {
+  fl=$(scuf)
+  if [[ ! -z "$fl" ]]; then
+    echo "$fl"
+    systemctl --user restart $fl
   fi
 }
 function cnc() {

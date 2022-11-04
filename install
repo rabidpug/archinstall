@@ -1,34 +1,10 @@
 #!/bin/bash
 set -eou pipefail
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
-  g # clear the in memory partition table
-  n # new partition
-    # default - partition number 1
-    # default - start at beginning of disk 
-  +300M # 300 MB boot parttion
-  t # change type
-  1 # efi
-  n # new partition
-    # default - partion number 2
-    # default - start immediately after preceding partition
-    # default - extend partition to end of disk
-  w # write the partition table
-  q # and we're done
-EOF
-sleep 5
-mkfs.fat -F 32 -n BOOT /dev/sda1
-mkfs.ext4 -L arch /dev/sda2
-mount /dev/sda2 /mnt
-mount --mkdir /dev/sda1 /mnt/boot
-reflector --save /etc/pacman.d/mirrorlist --protocol https \
-        --latest 5 \
-        --sort age \
-        --country Australia
-pacstrap -K /mnt base base-devel linux linux-firmware git exa fail2ban fzf jq yq man-db man-pages neovim openssh reflector rsync pacman-contrib thefuck tmux ufw unrar unzip wget zoxide nfs-utils ufw pkgfile
-
-genfstab -L /mnt >> /mnt/etc/fstab
-cp -r ../archinstall/ /mnt/
+echo -n 'step 00-preparation...'
+/archinstall/prepare &>/dev/null
+echo 'done'
 arch-chroot /mnt /archinstall/setup "$@"
-rm -rf /mnt/archinstall
-umount -R /mnt
+rm -rf /mnt/archinstall &>/dev/null
+umount -R /mnt &>/dev/null
+echo 'Complete! Rebooting'
 reboot
