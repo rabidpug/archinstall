@@ -4,6 +4,8 @@ echo root password
 passwd
 echo m password
 passwd m
+mkdir -p /etc/sudoers.d
+touch /etc/sudoers.d/wheel
 CAT <<EOF > /etc/sudoers.d/wheel
 %wheel ALL=(ALL:ALL) NOPASSWD: ALL
 Defaults env_keep += "EDITOR"
