@@ -18,15 +18,14 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
     # default, extend partition to end of disk
   a # make a partition bootable
   1 # bootable partition is partition 1 -- /dev/sda1
-  p # print the in-memory partition table
   w # write the partition table
   q # and we're done
 EOF
+read -p 'did it work? ' r
 mkfs.fat -F 32 -n BOOT /dev/sda1
 mkfs.ext4 -L arch /dev/sda2
 mount /dev/sda2 /mnt
 mount --mkdir /dev/sda1 /mnt/boot
-read -p 'did it work? ' r
 reflector --save /etc/pacman.d/mirrorlist --protocol https \
         --latest 5 \
         --sort age \
