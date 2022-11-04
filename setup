@@ -1,5 +1,5 @@
 #!/bin/bash
 
-for f in ./scripts/*; do
+for f in /archinstall/scripts/*; do
   $f "$1" "$2"
 done
