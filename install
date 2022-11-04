@@ -1,7 +1,5 @@
 #!/bin/bash
 set -eou pipefail
-read -p "Hostname: " host
-read -p "IP: " ip
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
   g # clear the in memory partition table
   n # new partition
@@ -29,8 +27,7 @@ pacstrap -K /mnt base base-devel linux linux-firmware git exa fail2ban fzf jq yq
 
 genfstab -L /mnt >> /mnt/etc/fstab
 cp -r ../archinstall/ /mnt/
-arch-chroot /mnt /archinstall/setup $host $ip
-exit
+arch-chroot /mnt /archinstall/setup "$@"
 rm -rf /mnt/archinstall
 umount -R /mnt
 reboot

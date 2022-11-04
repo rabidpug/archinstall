@@ -58,7 +58,7 @@ function gac() {
   fi
   git add .
   git commit -m "$msg"
-  if [[ "$1" == "-p" ]] || [[ "$2" == "p" ]]; then
+  if [[ "$1" == "-p" ]] || [[ "$2" == "-p" ]]; then
     git push
   fi
 }
