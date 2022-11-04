@@ -31,11 +31,11 @@ pacman-key --populate archlinux
 sudo pacman -Syu
 git clone https://aur.archlinux.org/yay.git
 cd yay
-makepkg -si --noconfirm
+sudo -u m makepkg -si --noconfirm
 cd ../
 rm -rf yay
-yay -Y --gendb
-yay -Y --devel --combinedupgrade --batchinstall --save
-yay -Syu --devel
-yay -Syu blesh-git neovim-symlinks systemd-boot-pacman-hook
+sudo -u m yay -Y --gendb
+sudo -u m yay -Y --devel --combinedupgrade --batchinstall --save
+sudo -u m yay -Syu --devel
+sudo -u m yay -Syu blesh-git neovim-symlinks systemd-boot-pacman-hook
 systemctl enable reflector.timer
