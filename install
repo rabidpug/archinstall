@@ -1,5 +1,11 @@
 #!/bin/bash
 set -eou pipefail
+help='Provide the positional arguments [hostname] [ip] [password]'
+if [[ -z "${1:-}" ]] || [[ -z "${2:-}" ]] || [[ -z "${3:-}" ]]; then
+  echo $help
+  exit 1
+fi
+
 echo -n 'step 00-preparation...'
 /archinstall/prepare &>/dev/null
 echo 'done'
