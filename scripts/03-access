@@ -28,4 +28,4 @@ EOF
 sudo -u m mkdir /home/m/.ssh
 mkdir -p /var/lib/systemd/linger
 touch /var/lib/systemd/linger/m
-read 'Press enter to continue' v
+read -p 'Press enter to continue' v
