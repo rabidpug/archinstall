@@ -11,7 +11,6 @@ sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
   +300M # 300 MB boot parttion
   t # change type
   ef # efi
-  a # make bootable
   n # new partition
   p # primary partition
   2 # partion number 2
@@ -27,6 +26,7 @@ mkfs.fat -F 32 -n BOOT /dev/sda1
 mkfs.ext4 -L arch /dev/sda2
 mount /dev/sda2 /mnt
 mount --mkdir /dev/sda1 /mnt/boot
+read -p 'did it work? ' r
 reflector --save /etc/pacman.d/mirrorlist --protocol https \
         --latest 5 \
         --sort age \
