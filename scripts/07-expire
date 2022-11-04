@@ -1,0 +1,5 @@
+#!/bin/bash
+set -eou pipefail
+passwd -e root
+passwd -e m
+passwd -l root

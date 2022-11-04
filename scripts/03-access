@@ -3,8 +3,6 @@ set -euo pipefail
 useradd -m -G wheel -s /bin/bash m
 echo -e 'atemporarypw\natemporarypw' | passwd
 echo -e 'atemporarypw\natemporarypw' | passwd m
-passwd -e root
-passwd -e m
 mkdir -p /etc/sudoers.d
 touch /etc/sudoers.d/wheel
 cat <<EOF > /etc/sudoers.d/wheel
@@ -28,4 +26,3 @@ PrintMotd no
 Subsystem sftp /usr/lib/ssh/sftp-server
 EOF
 sudo -u m mkdir /home/m/.ssh
-passwd -l root

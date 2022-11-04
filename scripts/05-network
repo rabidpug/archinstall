@@ -21,3 +21,6 @@ systemctl enable systemd-networkd
 systemctl enable systemd-resolved
 systemctl enable sshd
 sudo -u m systemctl --user enable update-keys
+ufw allow from 10.0.0.0/16 to any port 22
+ufw allow from 10.0.0.0/16 to any port 10050
+ufw enable
