@@ -26,6 +26,4 @@ PrintMotd no
 Subsystem sftp /usr/lib/ssh/sftp-server
 EOF
 sudo -u m mkdir /home/m/.ssh
-mkdir -p /var/lib/systemd/linger
-touch /var/lib/systemd/linger/m
-read -p 'Press enter to continue' v
+install -bD -m644 /dev/null /var/lib/systemd/linger/m
