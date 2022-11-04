@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eou pipefail
 read -p "Hostname: " host
 read -p "IP: " ip
 sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk /dev/sda
@@ -24,8 +25,8 @@ mkfs.ext4 -L arch /dev/sda2
 mount /dev/sda2 /mnt
 mount --mkdir /dev/sda1 /mnt/boot
 reflector --save /etc/pacman.d/mirrorlist --protocol https \
-        --latest 5
-        --sort age
+        --latest 5 \
+        --sort age \
         --country Australia
 pacstrap -K /mnt base base-devel linux linux-firmware git exa fail2ban fzf jq yq man-db man-pages neovim openssh reflector rsync pacman-contrib thefuck tmux ufw unrar unzip wget zoxide nfs-utils ufw pkgfile
 
