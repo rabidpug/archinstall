@@ -1,0 +1,7 @@
+if is_interactive; then
+  bleopt history_share=1
+  ble-face auto_complete='fg=#8a3a83,italic'
+  bleopt exec_errexit_mark=$'\e[91mexit %d\e[m'
+  bleopt exec_elapsed_mark=$'\e[94m%ss (%s %%)]e[m'
+  bleopt exec_elapsed_enabled='sys+usr>=1*60*1000'
+fi

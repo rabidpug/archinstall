@@ -1,0 +1,3 @@
+#!/bin/bash
+cp -r bin/* /usr/local/bin/
+cp -r skel/ /etc/

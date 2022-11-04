@@ -1,0 +1,11 @@
+[Unit]
+Description=Update SSH keys from Gitlab
+Requires=update-keys.service
+
+[Timer]
+Unit=update-keys.service
+OnCalendar=daily
+RandomizedDelaySec=2h
+
+[Install]
+WantedBy=timers.target

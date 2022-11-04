@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for f in scripts/*; do
+  $f "$1" "$2"
+done

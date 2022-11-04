@@ -1,0 +1,28 @@
+#!/bin/bash
+useradd -m -G wheel -s /bin/bash m
+passwd -e m
+CAT <<EOF > /etc/sudoers.d/wheel
+%wheel ALL=(ALL:ALL) NOPASSWD: ALL
+Defaults env_keep += "EDITOR"
+EOF
+
+cat <<EOF >> /etc/security/access.conf
++:(wheel):ALL
+-:ALL:ALL
+EOF
+
+CAT <<EOF >> /etc/ssh/sshd_config
+PermitRootLogin no
+AuthorizedKeysFile .ssh/authorized_keys
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+UsePAM yes
+AllowUsers m
+PrintMotd no
+Subsystem sftp /usr/lib/ssh/sftp-server
+EOF
+
+systemctl enable sshd
+sudo -u m systemctl --user enable update-keys
+passwd -e root
+passwd -l root

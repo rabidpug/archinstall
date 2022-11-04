@@ -1,0 +1,20 @@
+#!/bin/bash
+echo $1 > /etc/hostname
+cat <<EOF > /etc/systemd/network/20-wired.network
+[Match]
+name=ens18
+
+[Network]
+Address=$2/16
+Gateway=10.0.0.1
+DNS=10.0.0.1
+DHCP=no
+IPv6AcceptRA=false
+EOF
+cat <<EOF > /etc/systemd/resolved.conf
+[Resolve]
+DNS=10.0.0.1
+EOF
+
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved

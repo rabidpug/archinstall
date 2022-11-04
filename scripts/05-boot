@@ -1,0 +1,14 @@
+#!/bin/bash
+
+bootctl install
+cat <<EOF > /boot/loader/loader.conf
+default arch.conf
+console-mode max
+editor no
+EOF
+cat <<EOF > /boot/loader/entries/arch.conf
+title rabidArch
+linux /vmlinuz-linux
+initrd /initramfs-linux.img
+options root="arch" rw
+EOF

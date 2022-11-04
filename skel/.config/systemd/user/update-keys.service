@@ -1,0 +1,11 @@
+[Unit]
+Description=Update SSH keys from Gitlab
+Wants=update-keys.timer
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h
+ExecStart=update-keys
+
+[Install]
+WantedBy=default.target
